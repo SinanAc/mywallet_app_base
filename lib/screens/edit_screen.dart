@@ -104,7 +104,7 @@ class _EditScreenState extends State<EditScreen> {
                   height: 60,
                   child: GestureDetector(
                     onTap: () async {
-                      selectDate();
+                      _selectDate();
                     },
                     child: Container(
                       padding: const EdgeInsets.only(left: 10),
@@ -155,7 +155,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    updation(context, widget.data.id!);
+                    _updation(context, widget.data.id!);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.indigo,
@@ -176,7 +176,7 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 
-  updation(BuildContext context, String id) {
+  _updation(BuildContext context, String id) {
     final incomeOrExpenseValue = incomeOrExpense.toString();
     final amount = amountController.text.isEmpty
         ? 0.0
@@ -229,7 +229,7 @@ class _EditScreenState extends State<EditScreen> {
     }
   }
 
-  Future<void> selectDate() async {
+  Future<void> _selectDate() async {
     final selectedDateNow = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),

@@ -101,9 +101,6 @@ class SearchScreen extends StatelessWidget {
                                         const Text(
                                           'No results found',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              //fontWeight: FontWeight.bold,
-                                              ),
                                         )
                                       ],
                                     ),

@@ -15,7 +15,6 @@ class ChartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-    FutureBuilder(builder: (BuildContext context, AsyncSnapshot<Widget> snapshot){return
      DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -117,7 +116,7 @@ class ChartScreen extends StatelessWidget {
               }),
         ),
       ),
-    );});
+    );
   }
 }
 

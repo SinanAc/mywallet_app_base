@@ -117,8 +117,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         SnackBar(
           content: Text(
             selectedTime.hour >= 12
-                ? 'You will get a reminder at ${selectedTime.hour > 12 ? selectedTime.hour - 12 : selectedTime.hour}:${selectedTime.minute} PM'
-                : 'You will get a reminder at ${selectedTime.hour > 12 ? selectedTime.hour - 12 : selectedTime.hour == 0 ? 12 : selectedTime.hour}:${selectedTime.minute} AM',
+                ? "You will get a reminder at ${selectedTime.hour > 12 ? selectedTime.hour - 12 : selectedTime.hour} : ${selectedTime.minute ==0? selectedTime.minute : selectedTime.minute < 10 ? '0${selectedTime.minute}' : selectedTime.minute } PM"
+                : "You will get a reminder at ${selectedTime.hour == 0 ? 12 : selectedTime.hour > 12 ? selectedTime.hour - 12 : selectedTime.hour }:${selectedTime.minute ==0? selectedTime.minute : selectedTime.minute < 10 ? '0${selectedTime.minute}' : selectedTime.minute } AM",
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontWeight: FontWeight.bold,

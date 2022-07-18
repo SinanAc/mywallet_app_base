@@ -150,7 +150,7 @@ class _AddScreenState extends State<AddScreen> {
                   height: 58,
                   child: GestureDetector(
                     onTap: () async {
-                      selectDate();
+                      _selectDate();
                     },
                     child: Container(
                       padding: const EdgeInsets.only(left: 10),
@@ -200,7 +200,7 @@ class _AddScreenState extends State<AddScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    submission(context);
+                    _submission(context);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.indigo,
@@ -222,7 +222,7 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  submission(BuildContext context) async {
+  _submission(BuildContext context) async {
     final incomeOrExpenseValue = incomeOrExpense.toString();
     final amount = amountController.text.isEmpty
         ? 0.0
@@ -263,7 +263,7 @@ class _AddScreenState extends State<AddScreen> {
     }
   }
 
-  Future<void> selectDate() async {
+  Future<void> _selectDate() async {
     final selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),

@@ -201,8 +201,6 @@ Widget customMonthTransactionListWidget(
       valueListenable: TransactionDB.instance.transactionListNotifier,
       builder: (BuildContext ctx, List<TransactionModel> newTransactionList,
           Widget? _) {
-        // final data = newTransactionList;
-        // final customMonthData = data.where((element) => DateFormat.yMMMM().format(element.selectedDate) == DateFormat.yMMMM().format(customMonth)).toList();
         return ListView.builder(
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),

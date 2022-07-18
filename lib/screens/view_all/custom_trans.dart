@@ -49,11 +49,21 @@ class CustomTransactionScreen extends StatelessWidget {
               final data = transactionList;
               double customMonthIncome = 0;
               double customMonthExpense = 0;
+
               final customMonthData = data
                   .where((element) =>
                       DateFormat.yMMMM().format(element.selectedDate) ==
                       DateFormat.yMMMM().format(customSelected))
                   .toList();
+
+              final customPeriodDataList = data
+                  .where((element) =>
+                      element.selectedDate.isAfter(
+                          customSelected.subtract(const Duration(days: 1))) &&
+                      element.selectedDate.isBefore(
+                          customSelectedLastDate.add(const Duration(days: 1))))
+                  .toList();
+
               for (int i = 0; i < customMonthData.length; i++) {
                 customMonthData[i].incomeOrExpense == 'Income'
                     ? customMonthIncome += customMonthData[i].amount
@@ -92,8 +102,7 @@ class CustomTransactionScreen extends StatelessWidget {
                               .toList()
                               .isEmpty ||
                       hintText == 'Custom Month' && customMonthData.isEmpty ||
-                      hintText == 'Custom Period' && data.where((element) => element.selectedDate.isAfter(customSelected.subtract(const Duration(days: 1)))).toList().isEmpty ||
-                      data.where((element) => element.selectedDate.isBefore(customSelectedLastDate.add(const Duration(days: 1)))).toList().isEmpty
+                      hintText == 'Custom Period' && customPeriodDataList.isEmpty
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
