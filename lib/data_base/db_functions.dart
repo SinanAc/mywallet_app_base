@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_wallet/data_base/db_abstract.dart';
 import 'package:my_wallet/models/transaction_model.dart';
 import 'package:my_wallet/screens/splash_screen.dart';
 import 'package:my_wallet/widgets/dark_theme.dart';
@@ -9,13 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const transactionDbName = 'transaction_db';
-
-abstract class TransactionDbFunctions {
-  Future<void> addTransaction(TransactionModel value);
-  Future<void> updateTransaction({required data, required id});
-  Future<List<TransactionModel>> getAllTransaction();
-  Future<void> deleteTransaction(String id);
-}
 
 class TransactionDB implements TransactionDbFunctions {
   TransactionDB._internal();
@@ -66,8 +59,6 @@ class TransactionDB implements TransactionDbFunctions {
     refreshUi();
   }
 }
-
-
 
 Future<void> appReset(ctx) async {
   final themeChange = Provider.of<DarkThemeProvider>(ctx,listen: false);

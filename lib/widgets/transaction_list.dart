@@ -249,7 +249,7 @@ Widget customPeriodTransactionListWidget(BuildContext context,
 
 /*transaction displaying card*/
 Widget displayCard(BuildContext context, TransactionModel data,
-    {bool isCustom = false,bool isSearch = false}) {
+    {bool isCustom = false, bool isSearch = false}) {
   return Card(
     margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
     shape: RoundedRectangleBorder(
@@ -322,40 +322,48 @@ Widget displayCard(BuildContext context, TransactionModel data,
 }
 
 /*Function for Delete Verification*/
-deleteVerification(BuildContext context, String id,{bool isSearch=false}) async {
-  showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: const Text(
-            'Delete !!',
-            style: TextStyle(color: Colors.red),
+Future<dynamic> deleteVerification(
+  BuildContext context,
+  String id, {
+  bool isSearch = false,
+}) async {
+  return showDialog(
+    context: context,
+    builder: (ctx) {
+      return AlertDialog(
+        title: const Text(
+          'Delete !!',
+          style: TextStyle(color: Colors.red),
+        ),
+        content: const Text(
+            'This transaction will be deleted permanently. Are you sure?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
           ),
-          content: const Text(
-              'This transaction will be deleted permanently. Are you sure?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: const Text(
-                'Cancel',
+          TextButton(
+            onPressed: () {
+              TransactionDB.instance.deleteTransaction(id);
+              Navigator.of(ctx).pop();
+              isSearch
+                  ? Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchScreen(
+                          transactionList: TransactionDB
+                              .instance.transactionListNotifier.value)))
+                  : null;
+            },
+            child: const Text('Delete',
                 style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                TransactionDB.instance.deleteTransaction(id);
-                Navigator.of(ctx).pop();
-                isSearch? Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => SearchScreen(transactionList: TransactionDB.instance.transactionListNotifier.value))):null;
-              },
-              child: const Text('Delete',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold)),
-            ),
-          ],
-        );
-      });
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      );
+    },
+  );
 }

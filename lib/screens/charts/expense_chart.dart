@@ -117,7 +117,7 @@ class _ExpenseChartState extends State<ExpenseChart> {
     ));
   }
 
-  _selectPeriod(BuildContext context, List<TransactionModel> data) async {
+  Future<void> _selectPeriod(BuildContext context, List<TransactionModel> data) async {
     final customSelectedFirstDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now().subtract(const Duration(days: 1)),
@@ -157,8 +157,9 @@ class _ExpenseChartState extends State<ExpenseChart> {
     }
   }
 
-  _showBottomSheet(
-      BuildContext context, List<ChartData> customPeriodList, String heading) {
+  Future<dynamic> _showBottomSheet(
+      BuildContext context, List<ChartData> customPeriodList, String heading)async {
+        return
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
@@ -196,8 +197,8 @@ class _ExpenseChartState extends State<ExpenseChart> {
                       ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.white,
-                    primary: Colors.green,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.green,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();

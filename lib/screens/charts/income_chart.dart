@@ -95,31 +95,29 @@ class _IncomeChartState extends State<IncomeChart> {
         });
   }
 
-
   Widget _incomeDataChart(List<ChartData> transactionList,
-    {bool isCustom = false}) {
-  final List<ChartData> chartData = transactionList;
-  return Center(
-      child: SfCircularChart(
-    legend: Legend(
-      isVisible: true,
-      position: isCustom ? LegendPosition.bottom : LegendPosition.right,
-      isResponsive: true,
-    ),
-    series: <CircularSeries>[
-      PieSeries<ChartData, String>(
-        dataSource: chartData,
-        dataLabelSettings: const DataLabelSettings(isVisible: true),
-        xValueMapper: (ChartData data, _) => data.categoryTypeName,
-        yValueMapper: (ChartData data, _) => data.amount,
-        selectionBehavior: SelectionBehavior(enable: true),
-      )
-    ],
-  ));
-}
+      {bool isCustom = false}) {
+    final List<ChartData> chartData = transactionList;
+    return Center(
+        child: SfCircularChart(
+      legend: Legend(
+        isVisible: true,
+        position: isCustom ? LegendPosition.bottom : LegendPosition.right,
+        isResponsive: true,
+      ),
+      series: <CircularSeries>[
+        PieSeries<ChartData, String>(
+          dataSource: chartData,
+          dataLabelSettings: const DataLabelSettings(isVisible: true),
+          xValueMapper: (ChartData data, _) => data.categoryTypeName,
+          yValueMapper: (ChartData data, _) => data.amount,
+          selectionBehavior: SelectionBehavior(enable: true),
+        )
+      ],
+    ));
+  }
 
-
-  _selectPeriod(BuildContext context, List<TransactionModel> data) async {
+  Future<void> _selectPeriod(BuildContext context, List<TransactionModel> data) async {
     final customSelectedFirstDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now().subtract(const Duration(days: 1)),
@@ -152,61 +150,66 @@ class _IncomeChartState extends State<IncomeChart> {
         }
         final List<ChartData> customPeriodList =
             chartLogic(customPeriodListGenerate);
-        _showBottomSheet(context, customPeriodList,'${DateFormat.MMMd().format(customSelectedFirstDate)} - ${DateFormat.MMMd().format(customSelectedLastDate)}');
+        _showBottomSheet(context, customPeriodList,
+            '${DateFormat.MMMd().format(customSelectedFirstDate)} - ${DateFormat.MMMd().format(customSelectedLastDate)}');
       }
     }
   }
 
-  _showBottomSheet(BuildContext context, List<ChartData> customPeriodList,String heading) {
-    showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return
-          ValueListenableBuilder(
-        valueListenable: darkThemePreference,
-        builder: (BuildContext context, bool isDark, Widget?_){
-          return
-           Container(
-            decoration:  BoxDecoration(
-              color: isDark? Colors.grey[800]: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
-              ),
-            ),
-            height: MediaQuery.of(context).size.height * 0.7,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  heading,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  )),
-                customPeriodList.isNotEmpty
-                    ? _incomeDataChart(customPeriodList, isCustom: true)
-                    : const Center(
-                        child: Text('No data available on selected period !!',
-                            textAlign: TextAlign.center),
-                      ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.white,
-                    primary: Colors.green,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Close"),
+  Future<dynamic> _showBottomSheet(
+    BuildContext context,
+    List<ChartData> customPeriodList,
+    String heading,
+  ) async {
+    return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return ValueListenableBuilder(
+          valueListenable: darkThemePreference,
+          builder: (BuildContext context, bool isDark, Widget? _) {
+            return Container(
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey[800] : Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
-              ],
-            ),
-          );});
-        });
+              ),
+              height: MediaQuery.of(context).size.height * 0.7,
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(heading,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  customPeriodList.isNotEmpty
+                      ? _incomeDataChart(customPeriodList, isCustom: true)
+                      : const Center(
+                          child: Text('No data available on selected period !!',
+                              textAlign: TextAlign.center),
+                        ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Close"),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

@@ -182,8 +182,8 @@ class _AllChartState extends State<AllChart> {
                             ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          onPrimary: Colors.white,
-                          primary: Colors.green,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.green,
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();

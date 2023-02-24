@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:my_wallet/data_base/db_functions.dart';
 import 'package:my_wallet/widgets/dark_theme.dart';
 import 'package:my_wallet/widgets/notifications.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {

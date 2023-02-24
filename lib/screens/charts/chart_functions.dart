@@ -1,4 +1,3 @@
-
 import 'package:my_wallet/models/transaction_model.dart';
 
 class ChartData {
@@ -11,7 +10,7 @@ class ChartData {
   });
 }
 
-chartLogic(List<TransactionModel> transactionList) {
+List<ChartData> chartLogic(List<TransactionModel> transactionList) {
   double value;
   String category;
   List visited = [];
@@ -25,7 +24,8 @@ chartLogic(List<TransactionModel> transactionList) {
     value = transactionList[i].amount;
     category = transactionList[i].categoryTypeName;
     for (var j = i + 1; j < transactionList.length; j++) {
-      if (transactionList[i].categoryTypeName == transactionList[j].categoryTypeName) {
+      if (transactionList[i].categoryTypeName ==
+          transactionList[j].categoryTypeName) {
         value += transactionList[j].amount;
         visited[j] = -1;
       }
@@ -37,10 +37,6 @@ chartLogic(List<TransactionModel> transactionList) {
   return newChartData;
 }
 
-
-
-
-
 class AllChartData {
   String? incomeOrExpense;
   double? amount;
@@ -51,8 +47,8 @@ class AllChartData {
   });
 }
 
-allChartLogic(List<TransactionModel> transactionList) {
-  double value=0;
+List<AllChartData> allChartLogic(List<TransactionModel> transactionList) {
+  double value = 0;
   String incomeExpense;
   List visited = [];
   List<AllChartData> newChartData = [];
@@ -65,14 +61,20 @@ allChartLogic(List<TransactionModel> transactionList) {
     value = transactionList[i].amount;
     incomeExpense = transactionList[i].incomeOrExpense;
     for (var j = i + 1; j < transactionList.length; j++) {
-      if (transactionList[i].incomeOrExpense == transactionList[j].incomeOrExpense) {
+      if (transactionList[i].incomeOrExpense ==
+          transactionList[j].incomeOrExpense) {
         value += transactionList[j].amount;
         visited[j] = -1;
       }
     }
 
     if (visited[i] != -1) {
-      newChartData.add(AllChartData(incomeOrExpense: incomeExpense, amount: value));
+      newChartData.add(
+        AllChartData(
+          incomeOrExpense: incomeExpense,
+          amount: value,
+        ),
+      );
     }
   }
   return newChartData;

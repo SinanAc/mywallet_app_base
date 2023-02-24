@@ -158,7 +158,7 @@ class _EditScreenState extends State<EditScreen> {
                     _updation(context, widget.data.id!);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo,
+                    backgroundColor: Colors.indigo,
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),

@@ -203,7 +203,7 @@ class _AddScreenState extends State<AddScreen> {
                     _submission(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo,
+                    backgroundColor: Colors.indigo,
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
